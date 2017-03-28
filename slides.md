@@ -6,13 +6,18 @@ class: center, middle
 
 ---
 
-class: right, midle
+class: middle
 
-.right[![Right-aligned image](img/Bert.png)]
-
-## Bert Radke
-### T-Systems MMS
-#### Software Developer
+.image-left[![Bert Radke](img/Bert.png)]
+.h1[
+Bert Radke
+]
+.h2[
+T-Systems MMS
+]
+.h3[
+Software Developer
+]
 
 
 ---
