@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:hx="http://www.w3.org/2001/XInclude">
 <head>
     <title>The Frontend Monolith</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/moon.css">
+    <link rel="stylesheet" href="lib/css/zenburn.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -38,16 +39,35 @@
         </section>
         <!-- ******************************************************************** -->
         <section>
-            <h2>Warum Microservices</h2>
+            <h2>Versprechen Microservices</h2>
             <ul>
                 <li class="fragment">unabhängige Weiterentwicklung</li>
                 <li class="fragment">unabhängiges Deployment</li>
                 <li class="fragment">Skallierbarkeit</li>
-                <li class="fragment">Self Contained Systems</li>
             </ul>
             <aside class="notes" data-markdown>
                 * z.B. Einsatz von Neo4j für Empfehlungen
-                * NoSQL für Katalog
+                * Document Store für Katalog
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Aufwand / Kosten</h2>
+            <ul>
+                <li class="fragment">Code Doppelung</li>
+                <li class="fragment">Daten Doppelung</li>
+                <li class="fragment">Administration</li>
+            </ul>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Beispiel Retail Site</h2>
+            <aside class="notes" data-markdown>
+                * Katalog
+                * Empfehlungen
+                * Warenkorb
+                * Aktionen
+                * statische Inhalte (Menü)
             </aside>
         </section>
         <!-- ******************************************************************** -->
@@ -63,28 +83,266 @@
         </section>
         <!-- ******************************************************************** -->
         <section>
+            <p>.. und sie lebten glücklich bis an ihr Lebensende<span class="fragment">?</span></p>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <img style="border: none" class="stretch"  src="img/teams_with_ui.svg">
+            <aside class="notes" data-markdown>
+                * Besonderheiten UI:
+                    * einheitliches look & feel
+                    * JS: Teilt sich Window
+                    * time to interact
+                    * im Backend independent evolvability / frameworks
+                    * currently WebDev evolves fast
+                * Interaktion
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
             <h2>Aufwand / Kosten</h2>
             <ul>
-                <li class="fragment">Code Doppelung</li>
-                <li class="fragment">Daten Doppelung</li>
-                <li class="fragment">Administration</li>
-                <li class="fragment">Organisation</li>
+                <li class="fragment">+ Organisation</li>
+                <li class="fragment">+ Koordination</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * Sicherstellen Look & Feel
+                * 'Living Styleguide Lab' / no 'CSS Lib'
+                * mit kleinen Abweichungen leben
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Optionen der Integration</h2>
+            <ul>
+                <li class="fragment">Was integrieren wir? (Code / Daten)</li>
+                <li class="fragment">Wo integrieren wir? (Frontend / Backend)</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * können auch kombiniert werden
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Integration per Daten</h2>
+            <ul>
+                <li class="fragment">Team bis 'Oberkante API'</li>
+                <li class="fragment">UI vom verwendenden Team gebaut</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * Kopplung zwischen Teams
+                * Versionierung der API ...
+                * Hypermedia
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Integration per Code</h2>
+            <ul>
+                <li class="fragment">Team stellt Code für UI</li>
+                <li class="fragment">Kopplung zwischen Teams</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * Teams müssen sich auf Framework einigen / nicht heterogeneous / evolvability
+                * Release Train?
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Integration per Content</h2>
+            <ul>
+                <li class="fragment">'Transclude'</li>
+                <li class="fragment">Frontend: CSI</li>
+                <li class="fragment">Backend: SSI / ESI</li>
             </ul>
         </section>
         <!-- ******************************************************************** -->
         <section>
+            <h2>Integration im Backend</h2>
+            <img style="border: none" class="stretch"  src="img/esi.svg">
+            <aside class="notes" data-markdown>
+                * caching möglich (reverse proxy)
+                * gesamt Stream erst wenn ALLE includes geladen
+                * great for static content
+                * NGINX, Varnish
+                * Apache SSI: vergleichbar, aber ESI Standardisiert
+                * forwarding of headers (Auth..)
+                * development setup
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Integration im Frontend</h2>
+            <ul>
+                <li class="fragment">Link<span style="font-size: 0.8em" class="fragment">: "das magische Integrationskonzept" (Stefan Tilkov)</span></li>
+                <li class="fragment">iFrame</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * iframe Pros: Trennung des Codes / Sicherheit
+                * iframe Cons: Layoutprobleme, Interaktion
+            </aside>
 
         </section>
         <!-- ******************************************************************** -->
         <section>
-
+            <h2>Integration im Frontend / CSI</h2>
+            <ul>
+                <li>Javascript</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * Einschränkungen beachten
+                * mobile Clients bedenken
+                * Angular / React nicht für Komponenten geeignet
+                * progressive enhancement
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
-
+            <h2>hinclude</h2>
+            <pre><code class="hljs html"  data-trim >
+                    <hx:include src="/search">
+                        <div>
+                            <input>
+                            <button>Search</button>
+                        </div>
+                    </hx:include>
+                </code></pre>
+            <a href="http://mnot.github.io/hinclude/">http://mnot.github.io/hinclude/</a>
+            <aside class="notes" data-markdown>
+                * declarative
+                * async, timeouts, default content
+                * media matches
+                * kein transitives translude
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
+            <section>
+                <h2>h-include</h2>
+                <pre><code class="hljs html"  data-trim >
+                    <h-include src="/search">
+                        <div>
+                            <input>
+                            <button>Search</button>
+                        </div>
+                    </h-include>
+                </code></pre>
+                <a href="https://github.com/gustafnk/h-include/">https://github.com/gustafnk/h-include/</a>
+                <aside class="notes" data-markdown>
+                    * ebenfalls declarative, async, timeouts, default content
+                    * Custom element
+                    * erweiterbar, lazy-loading, loading-flash
+                    * transitives transcluding
+                    * progressiv enhancement
+                </aside>
+            </section>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Dependencies</h2>
+            <ul>
+                <li class="fragment">CSS: im eingebetteten Fragment enthalten</li>
+                <li class="fragment">JavaScript: loader helper</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * CSS:
+                    * moderne Browser mit HTTP/2 + SPDY
+                    * ESI als alternative
+                * JavaScript:
+                    * html include wenn vorhanden
+                    * helper script am Ende um cache zu busten
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>WebComponents / Custom Elements</h2>
+            <pre><code class="hljs javascript"  data-trim >
+                class SearchBar extends HTMLElement {
+                ...
+                }
+                customElements('search-bar', SearchBar);
+            </code></pre>
+            <aside class="notes" data-markdown>
+                * Browser Support: Chrome, Safari, Opera. Not: IE/Edge
+                * Polyfills
+                * ergänzt mit SSI / ESI für initial rendering
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Kommunikation</h2>
+            <pre><code class="hljs javascript"  data-trim >
+                document.addEventListener('cartChanged', refresh);
+                ...
+                document.dispatchEvent(new Event('cartChanged'));
+            </code></pre>
+            <aside class="notes" data-markdown>
+                * Components interagieren via Events
+                * Dokumentation
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Navigation</h2>
+            <ul>
+                <li>multiple single page apps</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * SPAs mit Einbettungen von 'Fremd-Components'
+                * routing z.b. Angular router
+                * Einzelne Apps je vertikalem Schnitt
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Mosaic 9</h2>
+            <div style="width: 100%; height: auto; display: inline-block">
+                <div style="float:left; width: 40%">
+                    <img src="img/mosaic9.png">
+                </div>
+                <div style="float:none;">
+                    <ul>
+                        <li>Tailor</li>
+                        <li>Skipper</li>
+                        <li>Innkeeper</li>
+                        <li>Quilt</li>
+                        <li>Shaker</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="https://www.mosaic9.org/">https://www.mosaic9.org/</a>
+            <aside class="notes" data-markdown>
+                * Zalando OpenSource
+                * Tailor: Layout für Komposition von Fragmenten
+                * Skipper: Router für Komposition / Reverse Proxy mit predicates / filters
+                * Innkeeper: Store für Skipper
+                * Quilt: Store für Tailor
+                * Shaker: Showcase / Lib für UI Components
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Fazit</h2>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Da war doch was?</h2>
+            <ul>
+                <li>JSR-168</li>
+                <li>JSR-162</li>
+                <li>JSR-167</li>
+                <li>JSR-286</li>
+                <li>JSR-362</li>
+            </ul>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <h2>Thanks to</h2>
+            <ul>
+                <li><a href="https://gustafnk.github.io/microservice-websites/">Gustaf Nilsson Kotte</a></li>
+                <li><a href="https://speakerdeck.com/naltatis/micro-frontends-building-a-modern-webapp-with-multiple-teams">Michael Geers</a></li>
+                <li><a href="https://www.innoq.com/de/timeline/?type=podcast_episodes">InnoQ Podcast</a></li>
+            </ul>
 
         </section>
     </div>
