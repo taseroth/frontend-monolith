@@ -14,6 +14,11 @@
         <!-- ******************************************************************** -->
         <section>
             <h1>The Frontend Monolith</h1>
+            <aside class="notes" data-markdown>
+                * mismatch backend / frontend
+                * some of the available Optionen
+                * Info from the internet
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
@@ -34,8 +39,6 @@
             <img class="stretch"  src="img/monolith-2001.jpg">
             <aside class="notes" data-markdown>
                 * Frage: wer hat bereits Microservice Architektur umgesetzt
-                * SCS?
-                * auch für das Frontend?
             </aside>
         </section>
         <!-- ******************************************************************** -->
@@ -44,11 +47,14 @@
             <ul>
                 <li class="fragment">unabhängige Weiterentwicklung</li>
                 <li class="fragment">unabhängiges Deployment</li>
-                <li class="fragment">Skallierbarkeit</li>
+                <li class="fragment">Skalierbarkeit</li>
+                <li class="fragment">Entkopplung der Teams</li>
             </ul>
             <aside class="notes" data-markdown>
                 * z.B. Einsatz von Neo4j für Empfehlungen
-                * Document Store für Katalog
+                * schneller in der Entwicklung
+                * auch Skalierung der Teams
+                * leichter Alternativen zu testen
             </aside>
         </section>
         <!-- ******************************************************************** -->
@@ -58,17 +64,21 @@
                 <li class="fragment">Code Doppelung</li>
                 <li class="fragment">Daten Doppelung</li>
                 <li class="fragment">Administration</li>
+                <li class="fragment">Automatisierung</li>
             </ul>
+            <aside class="notes" data-markdown>
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
-            <h2>Beispiel Retail Site</h2>
+            <h2>Self Contained Systems</h2>
+            <ul>
+                <li class="fragment">'große Mircoservices'?</li>
+                <li class="fragment">Abhängigkeiten zwischen Services minimieren</li>
+            </ul>
             <aside class="notes" data-markdown>
-                * Katalog
-                * Empfehlungen
-                * Warenkorb
-                * Aktionen
-                * statische Inhalte (Menü)
+                * Grenzen finden
+                * DDD einsetzen
             </aside>
         </section>
         <!-- ******************************************************************** -->
@@ -80,16 +90,37 @@
         </section>
         <!-- ******************************************************************** -->
         <section>
+            <h2>Beispiel Retail Site</h2>
+            <aside class="notes" data-markdown>
+                * Katalog
+                * Empfehlungen
+                * Warenkorb
+                * Menüstruktur
+                * Aktionen
+                * statische Inhalte
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
             <img style="border: none" class="stretch"  src="img/teams.svg">
+            <aside class="notes" data-markdown>
+                * Pro Team 1..2 verticals
+                * nie 2 Teams an einem System
+                * Backend / Frontend pro Team
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
             <p>.. und sie lebten glücklich bis an ihr Lebensende<span class="fragment">?</span></p>
+            <aside class="notes" data-markdown>
+                * Entwickeln, deployen, testen unabhängig
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
             <img style="border: none" class="stretch"  src="img/teams_with_ui.svg">
             <aside class="notes" data-markdown>
+                * 'Querschnitt-Thema' UI
                 * Besonderheiten UI:
                     * einheitliches look & feel
                     * JS: Teilt sich Window
@@ -110,6 +141,13 @@
                 * Sicherstellen Look & Feel
                 * 'Living Styleguide Lab' / no 'CSS Lib'
                 * mit kleinen Abweichungen leben
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
+            <img style="border: none; display: inline-block" class="stretch"  src="img/otto-vertikaleschnitte.png">
+            <p style="font-size: small"><a href="https://dev.otto.de/2013/04/14/architekturprinzipien-2/">Quelle: Otto - Architekturprinzipien</a></p>
+            <aside class="notes" data-markdown>
             </aside>
         </section>
         <!-- ******************************************************************** -->
@@ -166,7 +204,6 @@
                 * gesamt Stream erst wenn ALLE includes geladen
                 * great for static content
                 * NGINX, Varnish
-                * Apache SSI: vergleichbar, aber ESI Standardisiert
                 * forwarding of headers (Auth..)
                 * development setup
             </aside>
@@ -179,6 +216,7 @@
                 <li class="fragment">iFrame</li>
             </ul>
             <aside class="notes" data-markdown>
+                * Link beetween 2 different systems, same look. e.g. Otto checkout
                 * iframe Pros: Trennung des Codes / Sicherheit
                 * iframe Cons: Layoutprobleme, Interaktion
             </aside>
@@ -256,12 +294,26 @@
         </section>
         <!-- ******************************************************************** -->
         <section>
+            <h2>Asset Server</h2>
+            <ul>
+                <li class="fragment">Bereitstellen der Assets für alle Komponenten</li>
+                <li class="fragment">Trade-Off</li>
+                <li class="fragment">eigenes Team</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                  * z.B.Otto, mit spezieller Build Pipeline sichergestellt, das alle Assets nur 1 mal
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
             <h2>WebComponents / Custom Elements</h2>
             <pre><code class="hljs javascript"  data-trim >
                 class SearchBar extends HTMLElement {
                 ...
                 }
                 customElements('search-bar', SearchBar);
+                ...
+                <search-bar></search-bar>
             </code></pre>
             <aside class="notes" data-markdown>
                 * Browser Support: Chrome, Safari, Opera. Not: IE/Edge
@@ -296,6 +348,21 @@
         </section>
         <!-- ******************************************************************** -->
         <section>
+            <h2>Da war doch was?</h2>
+            <ul>
+                <li>JSR-168</li>
+                <li>JSR-162</li>
+                <li>JSR-167</li>
+                <li>JSR-286</li>
+                <li>JSR-362</li>
+            </ul>
+            <aside class="notes" data-markdown>
+                * Custom Implementations
+                * Otto,
+            </aside>
+        </section>
+        <!-- ******************************************************************** -->
+        <section>
             <h2>Mosaic 9</h2>
             <div style="width: 100%; height: auto; display: inline-block">
                 <div style="float:left; width: 40%">
@@ -324,17 +391,11 @@
         <!-- ******************************************************************** -->
         <section>
             <h2>Fazit</h2>
-        </section>
-        <!-- ******************************************************************** -->
-        <section>
-            <h2>Da war doch was?</h2>
-            <ul>
-                <li>JSR-168</li>
-                <li>JSR-162</li>
-                <li>JSR-167</li>
-                <li>JSR-286</li>
-                <li>JSR-362</li>
-            </ul>
+            <aside class="notes" data-markdown>
+                * Decoupling important, share nothing
+                * nicht für kurzfristige Projekte, sondern Produkte mit langem Lebenszyklus
+
+            </aside>
         </section>
         <!-- ******************************************************************** -->
         <section>
@@ -343,6 +404,7 @@
                 <li><a href="https://gustafnk.github.io/microservice-websites/">Gustaf Nilsson Kotte</a></li>
                 <li><a href="https://speakerdeck.com/naltatis/micro-frontends-building-a-modern-webapp-with-multiple-teams">Michael Geers</a></li>
                 <li><a href="https://www.innoq.com/de/timeline/?type=podcast_episodes">InnoQ Podcast</a></li>
+                <li><a href="https://dev.otto.de/">https://dev.otto.de/</a></li>
             </ul>
 
         </section>
@@ -376,7 +438,8 @@
                 src: 'plugin/notes/notes.js', async: true
             }
         ],
-        history: true
+        history: true,
+        controls: false
     });
 </script></body>
 </html>
