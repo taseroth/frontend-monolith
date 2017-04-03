@@ -45,3 +45,4 @@ fabric.properties
 /TheFrontEndMonolith.iml
 /.idea/
 *.iml
+node_modules/
